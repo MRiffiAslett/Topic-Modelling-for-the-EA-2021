@@ -1,0 +1,27 @@
+import requests
+from bs4 import BeautifulSoup
+import sys
+
+with open(sys.argv[1],'r') as f:
+    URL = []
+    a = 0
+    for line in f:
+        a +=1
+        if line.strip():
+            URL.append(line.strip())
+            if a % 5 == 0:       
+                print('Web page number {0} scraped'.format(a))
+
+full_text = []
+for url in URL:
+    response= requests.get(url)
+    page_content = response.content
+    soup = BeautifulSoup(page_content, 'html.parser')
+    text = soup.get_text().replace('\n','')
+    full_text.append(text)
+    
+print('{0} pages Scraped, the output is in a file called output.txt'.format(len(URL)))
+
+    
+with open('output.txt', 'w') as f:
+    f.write('\n'.join(full_text))

@@ -4,3 +4,4 @@ top2vec
 top2vec[sentence_encoders]
 top2vec[sentence_transformers]
 top2vec[indexing]
+bertopic
