@@ -14,8 +14,8 @@ with open(sys.argv[1],'r') as f:
 
 full_text = []
 for url in URL:
-    response= requests.get(url)
-    page_content = response.content
+    responses = requests.get(url)
+    page_content = responses.content
     soup = BeautifulSoup(page_content, 'html.parser')
     text = soup.get_text().replace('\n','')
     full_text.append(text)
