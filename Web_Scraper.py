@@ -23,4 +23,4 @@ for url in URL:
 with open('Unstructured_Corpora.txt', 'w') as f:
     f.write('\n'.join(full_text))
 
-print(f'{len(URL)} pages scraped. The output is in a file called output.txt.')
+print(f'{len(URL)} pages scraped. The output is in a file called Unstructured_Corpora.txt.')
