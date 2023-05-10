@@ -8,19 +8,17 @@ with open(sys.argv[1], 'r') as f:
     json_data = json.load(f)
 
 # extract the URLs from the JSON data
-URL = [data["url"] for data in json_data]
+URLs = [data["url"] for data in json_data]
 
-# scrape the web pages
-full_text = []
-for url in URL:
-    responses = requests.get(url)
-    page_content = responses.content
-    soup = BeautifulSoup(page_content, 'html.parser')
+# scrape the web pages and add the text to the JSON data
+for i, url in enumerate(URLs):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
     text = soup.get_text().replace('\n','')
-    full_text.append(text)
+    json_data[i]["content"] = text
 
-# write the scraped content to a file
-with open('Unstructured_Corpora.txt', 'w') as f:
-    f.write('\n'.join(full_text))
+# write the updated JSON data to a new file
+with open('updated_' + sys.argv[1], 'w') as f:
+    json.dump(json_data, f, indent=2)
 
-print(f'{len(URL)} pages scraped. The output is in a file called Unstructured_Corpora.txt.')
+print(f'{len(URLs)} pages scraped and added to the new JSON file.')
