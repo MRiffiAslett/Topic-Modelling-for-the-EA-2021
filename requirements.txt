@@ -9,3 +9,5 @@ scrapy
 LDA 
 NLTK
 pyLDAvis
+seaborn
+little_mallet_wrapper
