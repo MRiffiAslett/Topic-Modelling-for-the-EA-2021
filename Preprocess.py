@@ -49,7 +49,7 @@ def preprocess(x):
     df['content'] = df['content'].apply(lambda tokens: [stemmer.stem(token) for token in tokens])
 
     # Remove specific words
-    df['content'] = df['content'].apply(lambda tokens: [token for token in tokens if token not in ['cooki', 'gov.uk','govuk','’']])
+    df['content'] = df['content'].apply(lambda tokens: [token for token in tokens if token not in ['cooki', 'gov.uk','govuk','’','search', 'page','u','help','menu','chang','set','new','tab','addit', 'insur','carebusi','lawdis','selfemployedchildcar','parentingcitizenship','transporteduc',"'", ',',]])
 
     # Convert the index of df to a DatetimeIndex
     df.index = pd.to_datetime(df['date'])
