@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def plot_df(df, window_size=7):
     # Convert PeriodIndex to DateTimeIndex if needed
     if isinstance(df.index, pd.PeriodIndex):
@@ -15,13 +16,23 @@ def plot_df(df, window_size=7):
         # Apply rolling mean
         df_smoothed = df[column].rolling(window=window_size).mean()
 
-        axs[i].plot(df.index, df_smoothed)
+        # Calculate standard error of the mean
+        sem = df[column].rolling(window=window_size).std() / np.sqrt(window_size)
+
+        # Add standard error to the rolling mean
+        df_smoothed_plus_sem = df_smoothed + sem
+        df_smoothed_minus_sem = df_smoothed - sem
+
+        axs[i].plot(df.index, df_smoothed, label='Rolling Mean')
+        axs[i].fill_between(df.index, df_smoothed_minus_sem, df_smoothed_plus_sem, color='b', alpha=0.2)
         axs[i].set_xlabel("Date")
         axs[i].set_ylabel("Value")
         axs[i].set_title(column)  # Set the title as the column name
+        axs[i].legend()
 
     plt.tight_layout()
     plt.show()
+
 
 
 def print_coherence(dic, topics_list,text):
